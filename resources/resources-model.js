@@ -4,6 +4,7 @@ module.exports = {
   getAll,
   getById,
   insert,
+  getProjects,
 };
 
 function getAll() {
@@ -21,4 +22,14 @@ function insert(resource) {
     .then(([id]) => {
       return getById(id);
     });
+}
+
+// stretch
+
+function getProjects(id) {
+  return db("projects as p")
+    .join("project-resources as pr", "p.id", "=", "pr.project_id")
+    .join("resources as r", "r.id", "=", "pr.resource_id")
+    .select("p.*")
+    .where({ "pr.resource_id": id });
 }
