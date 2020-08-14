@@ -36,4 +36,14 @@ router.get("/:id/resources", (req, res) => {
     });
 });
 
+router.get("/:id/tasks", (req, res) => {
+  Projects.getTasks(req.params.id)
+    .then((tasks) => {
+      res.status(200).json({ tasks });
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
+    });
+});
+
 module.exports = router;
